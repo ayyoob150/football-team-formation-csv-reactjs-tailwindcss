@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { context } from "../App";
 import PlayerCard from "../components/PlayerCard";
 import FormationDialog from "../components/FormationDialog";
@@ -140,12 +140,13 @@ const Detail = () => {
     }
   }, [playersTable, location.pathname]);
 
-  const handlerPalyerCard =()=>{
-   const showPlayerData = playersTable?.filter((el,_)=>{
-    return el["player name"] === selectedPlayer?.name && el["jersey number"] === selectedPlayer?.number
-   })
-   return showPlayerData
-  }
+  const handlerPalyerCard = useCallback(()=>{
+      const showPlayerData = playersTable?.filter((el,_)=>{
+       return el["player name"] === selectedPlayer?.name && el["jersey number"] === selectedPlayer?.number
+      })
+      return showPlayerData
+     },[selectedPlayer?.name])
+
   return (
     <div className="flex bg-background-secondary min-h-[670px] my-4 p-8 mx-11 rounded-lg gap-x-8 shadow-inner">
       <FormationDialog

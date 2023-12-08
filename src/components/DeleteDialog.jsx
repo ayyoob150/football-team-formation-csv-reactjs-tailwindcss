@@ -1,7 +1,6 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import Modal from "../snippets/Modal";
-
 import { context } from "../App";
 
 const DeleteDialog = () => {
@@ -13,14 +12,16 @@ const DeleteDialog = () => {
     playersTable,
     row,
   } = useContext(context);
-  const DeleteHandler = () => {
+
+  const deleteHandler = useCallback(() => {
     const modifiedPlayerTable = playersTable?.filter((el, _) => {
       return el["player name"] !== row[0] && el["jersey number"] !== row[1];
     });
     setPlayerTable(modifiedPlayerTable);
     setPlayerTableIndex(-1);
     setShowDeleteDialog(false);
-  };
+  },[row[0],row[1]])
+
   return (
     <Modal
       maxWidth={"max-w-sm"}
@@ -52,7 +53,7 @@ const DeleteDialog = () => {
             Cancel
           </button>
           <button
-            onClick={() => DeleteHandler()}
+            onClick={() => deleteHandler()}
             className="px-5 py-3 text-sm rounded-lg bg-red-700 hover:bg-orange-700 border-2 border-red-700 hover:border-orange-700 text-white font-normal"
           >
             Delete
