@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Detail from "./pages/Detail";
 import { createContext, useState } from "react";
+import PageNotFound from "./pages/PageNotFound";
 
 export const context = createContext(null);
 
@@ -47,9 +48,11 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Navbar />}>
-              <Route index element={<Home />} />
-              <Route path="detail" element={<Detail />} />
+                <Route index element={<Home />} />
+                <Route path="/detail" element={<Detail />} />
+                <Route path="*" element={<PageNotFound/>}/>
             </Route>
+            <Route path="*" element={<PageNotFound/>}/>
           </Routes>
         </BrowserRouter>
       </context.Provider>
